@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette: editorial dark + chrome/metallic accent */
+  --color-ink: #08090a;          /* near-black background */
+  --color-charcoal: #121316;     /* elevated surfaces */
+  --color-graphite: #1c1e22;     /* card surfaces */
+  --color-steel: #3a3d44;        /* borders / dividers */
+  --color-mist: #9aa0aa;         /* secondary text */
+  --color-paper: #f3f2ee;        /* primary text on dark */
+  --color-chrome: #d8dce2;       /* metallic highlight */
+  --color-chrome-dim: #8b9099;   /* metallic mid-tone */
+  --color-accent: #c9a24a;       /* warm brass/gold accent, used sparingly */
+
+  --font-display: "Neue Haas Grotesk Display", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  background: var(--color-ink);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+/* Lenis required styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Utility: chrome text gradient for headlines */
+.text-chrome-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #d8dce2 45%, #8b9099 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* SplitType char/line wrappers must not clip descenders */
+.split-line,
+.split-word {
+  overflow: hidden;
+  display: block;
+}
+
+/* View Transitions API: soft cross-fade between landing and car detail */
+::view-transition-old(root) {
+  animation: fuzz-fade-out 0.35s ease forwards;
+}
+::view-transition-new(root) {
+  animation: fuzz-fade-in 0.45s ease forwards;
+}
+@keyframes fuzz-fade-out {
+  to { opacity: 0; }
+}
+@keyframes fuzz-fade-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
