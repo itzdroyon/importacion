@@ -45,20 +45,23 @@ export default function BrandStory() {
         },
       });
 
+      // Chapters fade out fully before the next fades in (sequential, not
+      // crossfaded) so a scroll frozen mid-transition never shows two
+      // chapters' text overlapping and unreadable.
       blockRefs.current.forEach((block, i) => {
         if (!block) return;
         if (i > 0) {
-          tl.to(blockRefs.current[i - 1], { opacity: 0, yPercent: -8, duration: 0.4 }, `chapter${i}`);
-          tl.to(bgRef.current, { backgroundColor: storyBlocks[i].tone, duration: 0.4 }, `chapter${i}`);
+          tl.to(blockRefs.current[i - 1], { opacity: 0, yPercent: -14, duration: 0.3 }, `chapter${i}`);
+          tl.to(bgRef.current, { backgroundColor: storyBlocks[i].tone, duration: 0.5 }, `chapter${i}`);
           tl.fromTo(
             block,
-            { opacity: 0, yPercent: 8 },
-            { opacity: 1, yPercent: 0, duration: 0.4 },
-            `chapter${i}`,
+            { opacity: 0, yPercent: 14 },
+            { opacity: 1, yPercent: 0, duration: 0.3 },
+            `chapter${i}+=0.32`,
           );
-          tl.to({}, { duration: 0.5 }); // hold so each chapter has reading time
+          tl.to({}, { duration: 0.6 }); // hold so each chapter has reading time
         } else {
-          tl.to({}, { duration: 0.5 });
+          tl.to({}, { duration: 0.6 });
         }
       });
     }, sectionRef);
